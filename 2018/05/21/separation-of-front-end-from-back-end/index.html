@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Zheng Jiasheng"><title>separation-of-front-end-from-back-end.md · 千 & 仙</title><meta name="description" content="[TOC]
+5.22分享会 之 前后端分离关于分享题目
+领域驱动设计入门
+
+在软件开发时，领域专家、设计人员、开发人员用彼此都能理解的UBIQUITOUS LANGUAGE(通用语言)作为互相交流的工具，在交流的过程中发现领域概念，然后将这些概念设计成一个领域模型，再由领域模型来驱动开发。领域驱动设"><meta name="keywords" content="HTML,CSS,JavaScript"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">千 &amp; 仙</a></h3><div class="description"><p>Being changing.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>separation-of-front-end-from-back-end.md</a></h3></div><div class="post-content"><p>[TOC]</p>
+<h1 id="5-22分享会-之-前后端分离"><a href="#5-22分享会-之-前后端分离" class="headerlink" title="5.22分享会 之 前后端分离"></a>5.22分享会 之 前后端分离</h1><h2 id="关于分享题目"><a href="#关于分享题目" class="headerlink" title="关于分享题目"></a>关于分享题目</h2><blockquote>
+<p>领域驱动设计入门</p>
+</blockquote>
+<p>在软件开发时，领域专家、设计人员、开发人员用彼此都能理解的<code>UBIQUITOUS LANGUAGE(通用语言)</code>作为互相交流的工具，在交流的过程中发现领域概念，然后将这些概念设计成一个领域模型，再由领域模型来驱动开发。领域驱动设计可以有效应对软件系统的复杂性。</p>
+<blockquote>
+<p>一起看《<a href="http://2014.jsconf.cn/slides/herman-taobaoweb/#/" target="_blank" rel="external">淘宝前后端分离实践</a>》</p>
+</blockquote>
+<p>一个对前后端分离架构解释得比较清晰的PPT，主要讲了为什么要做前后端分离以及怎么做前后端分离。这次分享我只是从自己理解的角度来复述这个PPT。</p>
+<hr>
+<h2 id="从web研发模式演变看为什么做前后端分离"><a href="#从web研发模式演变看为什么做前后端分离" class="headerlink" title="从web研发模式演变看为什么做前后端分离"></a>从web研发模式演变看为什么做前后端分离</h2><h3 id="Web-1-0时代"><a href="#Web-1-0时代" class="headerlink" title="Web 1.0时代"></a>Web 1.0时代</h3><p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268833538629.jpg" alt=""></p>
+<p>这种研发模式很适合创业型小项目，通常没有细分前后端，一个人或者几个人包揽所有开发任务。网页页面由JSP、PHP等工程师在服务端直接生成，浏览器负责展现。</p>
+<p>这种模式最明显的好处是简单且快，本地跑一个Tomcat或者Apache，一个人撸起袖子就是干，很快就能做出符合需求且能用的东西。</p>
+<p>坏处同样很明显，随着业务的发展，项目越来越复杂，这对公司来说是好事，但对于项目的开发来说则是一场灾难。因为原来几个人不足以维护这个项目，开发人员扩招到十几甚至几十个人，下面的问题开始暴露:</p>
+<ol>
+<li>服务越来越多，调用关系复杂，前端开发要在本地搭建环境变得麻烦。团队会开始搭建线上开发环境这个问题，但是这个解决方法并不理想，可以试想一下，前端开发想要调一个按钮的样式，要先在本地开发，然后代码上传至开发服务器，才可以看到最终的结果。而且开发服务器还可能出现各种问题，前端开发只能打两局王者荣耀等着后端开发处理问题。</li>
+<li>另一个严重的问题是，JSP等语言太自由，自由到可以直接内嵌Java代码，很容易导致前后端职责不清晰，很多业务逻辑很可能会出现在JSP代码中，会带来大量维护成本。</li>
+</ol>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268849595355.jpg" alt=""></p>
+<h3 id="后端为主的-MVC-时代"><a href="#后端为主的-MVC-时代" class="headerlink" title="后端为主的 MVC 时代"></a>后端为主的 MVC 时代</h3><p>为了降低开发复杂度，人们从后端出发对Web Server层进行架构升级，开启了后端MVC时代。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268852141152.jpg" alt=""></p>
+<p><code>MVC架构</code>将后台分成三个部分，<code>Model</code>负责软件的业务逻辑、数据管理，<code>Controller</code>负责转发、处理请求，<code>View</code>负责数据展示。可以看出，通过这种划分，各个层级的职责分工变得更清晰，但是依然存在问题:</p>
+<ol>
+<li>这种架构前后端协作主要有两种方式: 一种是前端写demo，写好后交给后端套模版，优点是demo可以本地开发、较为高效，缺点是前后端需要反复沟通交流，成本较大；另一种是前端开发负责浏览器端的开发以及后台View层的开发，好处是后端开发不用关注页面代码，坏处是前端开发中度依赖于后端开发环境。</li>
+<li>前后端职责依然不够清晰: 如果前端开发较为弱势，可能会被迫在View写业务逻辑；同时前端最应该关注的页面路由功能却在Controller层里，由后端开发。</li>
+</ol>
+<blockquote>
+<p>目前跟我们官网最相近的应该是这种开发模式，虽然有些细微的差别</p>
+</blockquote>
+<h3 id="Ajax-带来的-SPA-时代"><a href="#Ajax-带来的-SPA-时代" class="headerlink" title="Ajax 带来的 SPA 时代"></a>Ajax 带来的 SPA 时代</h3><p><code>Ajax</code>指的是一项用Javascript在浏览器端执行异步网络请求的技术，使用它便可以在不刷新页面的情况更新页面内容。2005年Google在Gmail里面对Ajax技术的应用让这项技术广为人知。我觉得在这之前，所谓的前端开发就是切切图、写写页面，说得好听点应该是<code>页面开发工程师</code>，不好听的应该就叫<code>页面仔</code>。<br>总而言之，Ajax给前端开发带来了更多可能，开启了Web 2.0时代。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268875566214.jpg" alt=""></p>
+<p><code>SPA (Single Page Application 单页面应用)</code>就是Ajax的产物，如上面这张图所展示，网页的所有静态资源存放在<code>CDN</code>上，网页使用Ajax与后台提供的接口进行数据交互。看起来这种模式已经很美妙了，但同时这种模式把复杂度从后端转移到了移动端的Javascript，所以前端也出现了MVC分层架构。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268882078705.jpg" alt=""></p>
+<p>其实这个时候，已经达到许多人所认知的前后端分离了，前端负责浏览器端的开发，后端负责后台业务逻辑的开发与数据管理，二者通过接口进行交互。整个发展的本质就是从后端渲染页面转变成前端渲染页面。</p>
+<p>其中还存在着许多问题，也涌现了很多对应的解决方案:</p>
+<pre><code>前后端接口约定问题: 使用RESTful API等接口约定来统一接口，减少联调过程中的沟通成本。
+前端开发的复杂度问题: SPA应用含有大量的功能交互，JavaScript代码越来越多。出现大量的框架用于解决复杂度问题，如Backbone，AngularJS等。同时基于MVC架构还演变出MVP、MVVC等架构。
+</code></pre><blockquote>
+<p>目前我们在微信上的各种活动页基本都是这种模式</p>
+</blockquote>
+<p>这种模式还有一些其他解决的问题:</p>
+<pre><code>SEO问题: 页面全异步渲染，不利于做SEO；
+性能问题: 浏览器渲染依赖于用户端设备的性能，移动端性能问题较为突出(随着网络、手机等硬件设施的发展，这个问题已经变得不那么明显)；
+重用问题: 模版、逻辑、路由无法重用，可能导致重复开发；
+前端发挥存在局限: 在前端做性能优化的空间有限，需要跟后端开发合作才能实现，但是又受到后端框架的影响，一些技术方案如 `Comet`、`Bigpipe` 等很难实现;
+等等...
+</code></pre><h3 id="Node-带来的全栈时代"><a href="#Node-带来的全栈时代" class="headerlink" title="Node 带来的全栈时代"></a>Node 带来的全栈时代</h3><p>其实一个更好的解决方法是，前端能够获得MVC架构中<code>Controller</code>的控制权，如果拥有了<code>Controller</code>的控制权，前端可以自己做URL Design，可以根据场景决定一个页面是在服务器同步渲染还是根据View层的数据浏览器异步渲染，还可以根据需求实现<code>Bigpipe</code>、<code>Comet</code>、<code>Socket</code>。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268918113821.jpg" alt=""></p>
+<p><code>NodeJS</code>的出现让这个解决方案变得可行。</p>
+<p><code>NodeJS</code>是一个在服务端的JavaScript环境，也就是<code>NodeJS</code>使得JavaScript具备了开发服务端程序的能力。<code>NodeJS</code>推动了前端技术的又一次发展，许多<code>前端工程师</code>进化成了<code>大前端工程师</code>，使用JS一门语言就能开发服务器端跟网页端。</p>
+<p>由于<code>NodeJS</code>的出现，我们可以重新定义前后端:</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268915779213.jpg" alt=""><br>这是传统前后端划分，根据代码的运行环境来划分前后端。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268916262401.jpg" alt=""><br>这是重新定义的前后端，根据工作职责来划分前后端。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com
+http://p71z5ohu8.bkt.clouddn.com/15268922267634.jpg" alt=""></p>
+<p>这种模式可以解决上一种模式遇到的问题:</p>
+<pre><code>1. Web Server 层也是 JavaScript 代码，意味着部分代码可前后复用;
+2. 需要 SEO 的场景可以在服务端同步渲染;
+3. 异步请求太多导致的性能问题也可以通过服务端来缓解;
+</code></pre><p>但是这种模式还是存在着很多挑战:</p>
+<pre><code>1. 前端开发对服务端编程有更进一步的认识;
+2. Node层 与 JAVA等服务层的通信问题;
+3. 前端开发可能还需要了解部署与运维方面的知识;
+4. 最重要的是，历史遗留问题的过渡;
+</code></pre><h2 id="具体该怎么做"><a href="#具体该怎么做" class="headerlink" title="具体该怎么做"></a>具体该怎么做</h2><h3 id="接口服务化"><a href="#接口服务化" class="headerlink" title="接口服务化"></a>接口服务化</h3><ol>
+<li>使用<code>JSON Schema</code>规范接口 <a href="http://imweb.io/topic/56b1b4bb5c49f9d377ed8ee9" target="_blank" rel="external">JSON Schema 介绍及应用</a></li>
+<li>接口管理平台<ul>
+<li>自动化管理文档</li>
+<li>版本管理 - 比较, 合并, 历史记录</li>
+<li>应用发布 - 应用灰度, 应用回滚</li>
+<li>接口验证 - 格式验证, 回归测试</li>
+</ul>
+</li>
+<li>接口模拟: 透过接口定义产生模拟数据，前端不需等待后端的接口，即可开始开发业务，后端的接口必须通过接口验证，降低联调成本。</li>
+<li>中间层即NodeJS层不关心具体业务逻辑，专注于数据的使用。</li>
+</ol>
+<h3 id="代码模块化"><a href="#代码模块化" class="headerlink" title="代码模块化"></a>代码模块化</h3><ol>
+<li><p>代码复用</p>
+<p> Node 应用由模块组成，采用 <code>CommonJS</code> 模块规范，所以如果浏览器端也以 <code>CommonJS</code> 进行模块开发，可以轻松实现代码复用:</p>
+<ul>
+<li>模版可重用在浏览器端与服务器端</li>
+<li>模型与方法可重用在浏览器端与服务器端</li>
+<li>控制与路由可重用在浏览器端与服务器端</li>
+<li>或是更多的可能</li>
+</ul>
+</li>
+<li><p>模块预处理</p>
+<ul>
+<li>JS Convert：coffee script, dart, etc.</li>
+<li>ES6 Complier：Traceur-Complier, JSDC, etc.</li>
+<li>CSS Complier：sass, less, stylus, etc.</li>
+<li>共用模块加载：polyfill, etc.</li>
+<li>业务预处理</li>
+<li>其他的可能</li>
+</ul>
+</li>
+</ol>
+<h3 id="功能组件化"><a href="#功能组件化" class="headerlink" title="功能组件化"></a>功能组件化</h3><ol>
+<li>封装: 把细粒度的模块封装成应付业务需求的组件。</li>
+<li>组合: 挑选组件，组合成满足需求的应用。</li>
+<li>多形: 同一个组件在不同环境下可以有不同的行为，但是共用同样的逻辑。例如一个地址选择器，在不同的设备或环境下，有不一样的呈现结构和交互方式，但校验逻辑跟数据接口却是一样的。</li>
+</ol>
+<h2 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h2><ul>
+<li><a href="http://2014.jsconf.cn/slides/herman-taobaoweb/#/" target="_blank" rel="external">淘宝前后端分离实践</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end/" target="_blank" rel="external">前后端分离的思考与实践（一）</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end-2/" target="_blank" rel="external">前后端分离的思考与实践（二）</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end-3/" target="_blank" rel="external">前后端分离的思考与实践（三）</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end-4/" target="_blank" rel="external">前后端分离的思考与实践（四）</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end-5/" target="_blank" rel="external">前后端分离的思考与实践（五）</a></li>
+<li><a href="http://taobaofed.org/blog/2014/04/05/practice-of-separation-of-front-end-from-back-end-6/" target="_blank" rel="external">前后端分离的思考与实践（六）</a></li>
+</ul>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-05-21</span><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"><a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"><a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"><a href="http://twitter.com/home?status=,http://yoursite.com/2018/05/21/separation-of-front-end-from-back-end/,千 &amp; 仙,separation-of-front-end-from-back-end.md,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a role="navigation" href="/2017/11/02/hello-world/" title="Hello World" class="btn">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
