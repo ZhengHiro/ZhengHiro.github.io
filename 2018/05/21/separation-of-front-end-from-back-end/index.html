@@ -12,8 +12,7 @@
 </blockquote>
 <p>一个对前后端分离架构解释得比较清晰的PPT，主要讲了为什么要做前后端分离以及怎么做前后端分离。这次分享我只是从自己理解的角度来复述这个PPT。</p>
 <hr>
-<h2 id="从web研发模式演变看为什么做前后端分离"><a href="#从web研发模式演变看为什么做前后端分离" class="headerlink" title="从web研发模式演变看为什么做前后端分离"></a>从web研发模式演变看为什么做前后端分离</h2><h3 id="Web-1-0时代"><a href="#Web-1-0时代" class="headerlink" title="Web 1.0时代"></a>Web 1.0时代</h3><p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268833538629.jpg" alt=""></p>
+<h2 id="从web研发模式演变看为什么做前后端分离"><a href="#从web研发模式演变看为什么做前后端分离" class="headerlink" title="从web研发模式演变看为什么做前后端分离"></a>从web研发模式演变看为什么做前后端分离</h2><h3 id="Web-1-0时代"><a href="#Web-1-0时代" class="headerlink" title="Web 1.0时代"></a>Web 1.0时代</h3><p><img src="http://p71z5ohu8.bkt.clouddn.com/15268833538629.jpg" alt=""></p>
 <p>这种研发模式很适合创业型小项目，通常没有细分前后端，一个人或者几个人包揽所有开发任务。网页页面由JSP、PHP等工程师在服务端直接生成，浏览器负责展现。</p>
 <p>这种模式最明显的好处是简单且快，本地跑一个Tomcat或者Apache，一个人撸起袖子就是干，很快就能做出符合需求且能用的东西。</p>
 <p>坏处同样很明显，随着业务的发展，项目越来越复杂，这对公司来说是好事，但对于项目的开发来说则是一场灾难。因为原来几个人不足以维护这个项目，开发人员扩招到十几甚至几十个人，下面的问题开始暴露:</p>
@@ -21,11 +20,9 @@ http://p71z5ohu8.bkt.clouddn.com/15268833538629.jpg" alt=""></p>
 <li>服务越来越多，调用关系复杂，前端开发要在本地搭建环境变得麻烦。团队会开始搭建线上开发环境这个问题，但是这个解决方法并不理想，可以试想一下，前端开发想要调一个按钮的样式，要先在本地开发，然后代码上传至开发服务器，才可以看到最终的结果。而且开发服务器还可能出现各种问题，前端开发只能打两局王者荣耀等着后端开发处理问题。</li>
 <li>另一个严重的问题是，JSP等语言太自由，自由到可以直接内嵌Java代码，很容易导致前后端职责不清晰，很多业务逻辑很可能会出现在JSP代码中，会带来大量维护成本。</li>
 </ol>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268849595355.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268849595355.jpg" alt=""></p>
 <h3 id="后端为主的-MVC-时代"><a href="#后端为主的-MVC-时代" class="headerlink" title="后端为主的 MVC 时代"></a>后端为主的 MVC 时代</h3><p>为了降低开发复杂度，人们从后端出发对Web Server层进行架构升级，开启了后端MVC时代。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268852141152.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268852141152.jpg" alt=""></p>
 <p><code>MVC架构</code>将后台分成三个部分，<code>Model</code>负责软件的业务逻辑、数据管理，<code>Controller</code>负责转发、处理请求，<code>View</code>负责数据展示。可以看出，通过这种划分，各个层级的职责分工变得更清晰，但是依然存在问题:</p>
 <ol>
 <li>这种架构前后端协作主要有两种方式: 一种是前端写demo，写好后交给后端套模版，优点是demo可以本地开发、较为高效，缺点是前后端需要反复沟通交流，成本较大；另一种是前端开发负责浏览器端的开发以及后台View层的开发，好处是后端开发不用关注页面代码，坏处是前端开发中度依赖于后端开发环境。</li>
@@ -35,11 +32,9 @@ http://p71z5ohu8.bkt.clouddn.com/15268852141152.jpg" alt=""></p>
 <p>目前跟我们官网最相近的应该是这种开发模式，虽然有些细微的差别</p>
 </blockquote>
 <h3 id="Ajax-带来的-SPA-时代"><a href="#Ajax-带来的-SPA-时代" class="headerlink" title="Ajax 带来的 SPA 时代"></a>Ajax 带来的 SPA 时代</h3><p><code>Ajax</code>指的是一项用Javascript在浏览器端执行异步网络请求的技术，使用它便可以在不刷新页面的情况更新页面内容。2005年Google在Gmail里面对Ajax技术的应用让这项技术广为人知。我觉得在这之前，所谓的前端开发就是切切图、写写页面，说得好听点应该是<code>页面开发工程师</code>，不好听的应该就叫<code>页面仔</code>。<br>总而言之，Ajax给前端开发带来了更多可能，开启了Web 2.0时代。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268875566214.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268875566214.jpg" alt=""></p>
 <p><code>SPA (Single Page Application 单页面应用)</code>就是Ajax的产物，如上面这张图所展示，网页的所有静态资源存放在<code>CDN</code>上，网页使用Ajax与后台提供的接口进行数据交互。看起来这种模式已经很美妙了，但同时这种模式把复杂度从后端转移到了移动端的Javascript，所以前端也出现了MVC分层架构。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268882078705.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268882078705.jpg" alt=""></p>
 <p>其实这个时候，已经达到许多人所认知的前后端分离了，前端负责浏览器端的开发，后端负责后台业务逻辑的开发与数据管理，二者通过接口进行交互。整个发展的本质就是从后端渲染页面转变成前端渲染页面。</p>
 <p>其中还存在着许多问题，也涌现了很多对应的解决方案:</p>
 <pre><code>前后端接口约定问题: 使用RESTful API等接口约定来统一接口，减少联调过程中的沟通成本。
@@ -54,17 +49,13 @@ http://p71z5ohu8.bkt.clouddn.com/15268882078705.jpg" alt=""></p>
 前端发挥存在局限: 在前端做性能优化的空间有限，需要跟后端开发合作才能实现，但是又受到后端框架的影响，一些技术方案如 `Comet`、`Bigpipe` 等很难实现;
 等等...
 </code></pre><h3 id="Node-带来的全栈时代"><a href="#Node-带来的全栈时代" class="headerlink" title="Node 带来的全栈时代"></a>Node 带来的全栈时代</h3><p>其实一个更好的解决方法是，前端能够获得MVC架构中<code>Controller</code>的控制权，如果拥有了<code>Controller</code>的控制权，前端可以自己做URL Design，可以根据场景决定一个页面是在服务器同步渲染还是根据View层的数据浏览器异步渲染，还可以根据需求实现<code>Bigpipe</code>、<code>Comet</code>、<code>Socket</code>。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268918113821.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268918113821.jpg" alt=""></p>
 <p><code>NodeJS</code>的出现让这个解决方案变得可行。</p>
 <p><code>NodeJS</code>是一个在服务端的JavaScript环境，也就是<code>NodeJS</code>使得JavaScript具备了开发服务端程序的能力。<code>NodeJS</code>推动了前端技术的又一次发展，许多<code>前端工程师</code>进化成了<code>大前端工程师</code>，使用JS一门语言就能开发服务器端跟网页端。</p>
 <p>由于<code>NodeJS</code>的出现，我们可以重新定义前后端:</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268915779213.jpg" alt=""><br>这是传统前后端划分，根据代码的运行环境来划分前后端。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268916262401.jpg" alt=""><br>这是重新定义的前后端，根据工作职责来划分前后端。</p>
-<p><img src="http://p71z5ohu8.bkt.clouddn.com
-http://p71z5ohu8.bkt.clouddn.com/15268922267634.jpg" alt=""></p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268915779213.jpg" alt=""><br>这是传统前后端划分，根据代码的运行环境来划分前后端。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268916262401.jpg" alt=""><br>这是重新定义的前后端，根据工作职责来划分前后端。</p>
+<p><img src="http://p71z5ohu8.bkt.clouddn.com/15268922267634.jpg" alt=""></p>
 <p>这种模式可以解决上一种模式遇到的问题:</p>
 <pre><code>1. Web Server 层也是 JavaScript 代码，意味着部分代码可前后复用;
 2. 需要 SEO 的场景可以在服务端同步渲染;
